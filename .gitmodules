@@ -1,3 +1,9 @@
 [submodule "opentelemetry"]
-	path = ./opentelemetry
+	path = lib/opentelemetry
 	url = https://github.com/open-telemetry/opentelemetry-proto
+[submodule "lib/opentelemetry-proto"]
+	path = lib/opentelemetry-proto
+	url = https://github.com/open-telemetry/opentelemetry-proto
+[submodule "lib/protobuf-c"]
+	path = lib/protobuf-c
+	url = https://github.com/fluent/protobuf-c

@@ -22,6 +22,29 @@
 
 #include <fluent-otel-proto/fluent-otel-info.h>
 
+#ifdef FLUENT_OTEL_HAVE_COMMON
+#include <opentelemetry/proto/common/v1/common.pb-c.h>
+#endif
+
+#ifdef FLUENT_OTEL_HAVE_RESOURCE
+#include <opentelemetry/proto/resource/v1/resource.pb-c.h>
+#endif
+
+#ifdef FLUENT_OTEL_HAVE_TRACE
+#include <opentelemetry/proto/trace/v1/trace.pb-c.h>
+#include <opentelemetry/proto/collector/trace/v1/trace_service.pb-c.h>
+#endif
+
+#ifdef FLUENT_OTEL_HAVE_LOGS
+#include <opentelemetry/proto/logs/v1/logs.pb-c.h>
+#include <opentelemetry/proto/collector/logs/v1/logs_service.pb-c.h>
+#endif
+
+#ifdef FLUENT_OTEL_HAVE_METRICS
+#include <opentelemetry/proto/metrics/v1/metrics.pb-c.h>
+#include <opentelemetry/proto/collector/metrics/v1/metrics_service.pb-c.h>
+#endif
+
 /* just a way to expose some helper functions */
 void fluent_otel_info();
 
