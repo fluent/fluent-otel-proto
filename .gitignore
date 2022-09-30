@@ -1,0 +1,7 @@
+include/opentelemetry/*
+src/opentelemetry/*
+build/*
+include/*.in
+*sublime*
+include/fluent-otel-proto/fluent-otel-info.h
+
