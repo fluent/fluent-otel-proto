@@ -38,6 +38,9 @@
 #ifndef FLUENT_OTEL_HAVE_LOGS
 #define FLUENT_OTEL_HAVE_LOGS
 #endif
+#ifndef FLUENT_OTEL_HAVE_METRICS
+#define FLUENT_OTEL_HAVE_METRICS
+#endif
 
 
 #endif
