@@ -2080,7 +2080,7 @@ parse_tag_and_wiretype(size_t len,
 		*tag_out = tag;
 		return 1;
 	}
-	for (rv = 1; rv < max_rv; rv++) {
+	for (rv = 1; rv < max_rv && (sizeof(uint32_t) * 8); rv++) {
 		if (data[rv] & 0x80) {
 			tag |= (data[rv] & 0x7f) << shift;
 			shift += 7;
@@ -2089,6 +2089,9 @@ parse_tag_and_wiretype(size_t len,
 			*tag_out = tag;
 			return rv + 1;
 		}
+	}
+	if (shift >= (sizeof(uint32_t) * 8)) {
+		PROTOBUF_C_UNPACK_ERROR("out of bounds shift value");
 	}
 	return 0; /* error: bad header */
 }
@@ -2124,6 +2127,10 @@ scan_length_prefixed_data(size_t len, const uint8_t *data,
 	}
 	if (i == hdr_max) {
 		PROTOBUF_C_UNPACK_ERROR("error parsing length for length-prefixed data");
+		return 0;
+	}
+	if (shift >= (sizeof(size_t) * 8)) {
+		PROTOBUF_C_UNPACK_ERROR("out of bounds shift value");
 		return 0;
 	}
 	hdr_len = i + 1;
