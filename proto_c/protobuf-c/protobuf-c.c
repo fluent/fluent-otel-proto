@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2022, Dave Benson and the protobuf-c authors.
+ * Copyright (c) 2008-2023, Dave Benson and the protobuf-c authors.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -1888,7 +1888,6 @@ pack_buffer_packed_payload(const ProtobufCFieldDescriptor *field,
 		for (i = 0; i < count; i++) {
 			unsigned len = boolean_pack(((protobuf_c_boolean *) array)[i], scratch);
 			buffer->append(buffer, len, scratch);
-			rv += len;
 		}
 		return count;
 	default:
@@ -1923,6 +1922,7 @@ repeated_field_pack_to_buffer(const ProtobufCFieldDescriptor *field,
 		buffer->append(buffer, rv, scratch);
 		tmp = pack_buffer_packed_payload(field, count, array, buffer);
 		assert(tmp == payload_len);
+		(void)tmp;
 		return rv + payload_len;
 	} else {
 		size_t siz;
@@ -2080,7 +2080,7 @@ parse_tag_and_wiretype(size_t len,
 		*tag_out = tag;
 		return 1;
 	}
-	for (rv = 1; rv < max_rv && (sizeof(uint32_t) * 8); rv++) {
+	for (rv = 1; rv < max_rv; rv++) {
 		if (data[rv] & 0x80) {
 			tag |= (data[rv] & 0x7f) << shift;
 			shift += 7;
@@ -2089,9 +2089,6 @@ parse_tag_and_wiretype(size_t len,
 			*tag_out = tag;
 			return rv + 1;
 		}
-	}
-	if (shift >= (sizeof(uint32_t) * 8)) {
-		PROTOBUF_C_UNPACK_ERROR("out of bounds shift value");
 	}
 	return 0; /* error: bad header */
 }
@@ -2127,10 +2124,6 @@ scan_length_prefixed_data(size_t len, const uint8_t *data,
 	}
 	if (i == hdr_max) {
 		PROTOBUF_C_UNPACK_ERROR("error parsing length for length-prefixed data");
-		return 0;
-	}
-	if (shift >= (sizeof(size_t) * 8)) {
-		PROTOBUF_C_UNPACK_ERROR("out of bounds shift value");
 		return 0;
 	}
 	hdr_len = i + 1;
@@ -2563,7 +2556,7 @@ parse_required_member(ScannedMember *scanned_member,
 
 		if (maybe_clear && *pstr != NULL) {
 			const char *def = scanned_member->field->default_value;
-			if (*pstr != NULL && *pstr != def)
+			if (*pstr != def)
 				do_free(allocator, *pstr);
 		}
 		*pstr = do_alloc(allocator, len - pref_len + 1);
