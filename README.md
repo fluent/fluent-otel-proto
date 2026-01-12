@@ -33,10 +33,9 @@ examples/test-api
 - opentelemetry proto 'resource':     found
 - opentelemetry proto 'trace'   :     found
 - opentelemetry proto 'logs'    :     found
-- opentelemetry proto 'metrics' : not found (enable it with -DFLUENT_PROTO_METRICS)
+- opentelemetry proto 'metrics' :     found
+- opentelemetry proto 'profiles':     found
 ```
-
-> Yes, Metrics are disabled for now.
 
 ## Regenerate C files
 
@@ -94,7 +93,8 @@ In addition, the following build options are available if you desire to enable/d
 | FLUENT_PROTO_RESOURCE | Include the regeneration of a C interface for `resource.proto` file. | On      |
 | FLUENT_PROTO_TRACE    | Include the regeneration of a C interfaces for `trace.proto` and `trace_service.proto` files. | On      |
 | FLUENT_PROTO_LOGS     | Include the regeneration of a C interfaces for `logs.proto` and `logs_service.proto` files. | On      |
-| FLUENT_PROTO_METRICS  | Include the regeneration of a C interfaces for `metrics.proto` and `metrics_service.proto` files. | Off     |
+| FLUENT_PROTO_METRICS  | Include the regeneration of a C interfaces for `metrics.proto` and `metrics_service.proto` files. | On      |
+| FLUENT_PROTO_PROFILES | Include the regeneration of a C interfaces for `profiles.proto` and `profiles_service.proto` files (experimental). | On      |
 
 #### 5. Example
 
