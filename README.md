@@ -45,9 +45,27 @@ To regenerate the C files inside this repo, you need to main dependencies or rep
 
 ### Download dependencies
 
+#### 0. protobuf (https://github.com/protocolbuffers/protobuf)
+
+This version of protobuf-c to build in the next steps required an updated version of `protobuf`, at this moment this needs to be compiled manually since distros ships a very old version, here are the required steps:
+
+```bash
+cd /tmp
+git clone --depth 1 --branch v5.26.1 https://github.com/protocolbuffers/protobuf.git protobuf-src
+cd protobuf-src
+git submodule update --init --recursive
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+         -Dprotobuf_BUILD_TESTS=OFF \
+         -DCMAKE_INSTALL_PREFIX=/usr/local
+make
+sudo make install
+sudo ldconfig
+```
+
 #### 1. Protobuf-c
 
-The repository [fluent/protobuf-c](https://github.com/fluent/protobuf-c) is a fork of the official protobuf-c that includes a small modification to support `options` feature from proto3. This feature is only required by the OpenTelemetry Metrics data model.
+The repository [fluent/protobuf-c](https://github.com/fluent/protobuf-c) is a fork of the official protobuf-c that includes [upstream PR #781](https://github.com/protobuf-c/protobuf-c/pull/781)  to support `optional` feature from proto3. This feature is only required by the OpenTelemetry Metrics data model.
 
 Download and install `protobuf-c` by  running the following commands:
 
@@ -55,7 +73,7 @@ Download and install `protobuf-c` by  running the following commands:
 git clone https://github.com/fluent/protobuf-c
 cd protobuf-c
 ./autogen.sh
-./configure --prefix=/opt/protobuf-c
+./configure PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig --prefix=/opt/protobuf-c
 make
 sudo make install
 ```
