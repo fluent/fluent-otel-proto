@@ -26,17 +26,15 @@ cmake ../
 
 By default an example test gets available:
 
-```
+```bash
 examples/test-api
-
 - opentelemetry proto 'common'  :     found
 - opentelemetry proto 'resource':     found
 - opentelemetry proto 'trace'   :     found
 - opentelemetry proto 'logs'    :     found
-- opentelemetry proto 'metrics' : not found (enable it with -DFLUENT_PROTO_METRICS)
+- opentelemetry proto 'metrics' :     found
+- opentelemetry proto 'profiles':     found
 ```
-
-> Yes, Metrics are disabled for now.
 
 ## Regenerate C files
 
@@ -76,7 +74,7 @@ git clone https://github.com/open-telemetry/opentelemetry-proto
 git clone https://github.com/fluent/fluent-otel-proto
 ```
 
-#### 4. Regenerate C Files 
+#### 4. Regenerate C Files
 
 The CMake command will require the following variable definitions to succeed in the C files regeneration:
 
@@ -90,11 +88,12 @@ In addition, the following build options are available if you desire to enable/d
 
 | Build Option          | Description                                                  | Default |
 | --------------------- | ------------------------------------------------------------ | ------- |
-| FLUENT_PROTO_COMMON   | Include the regeneration of a C interface for `common.proto` file. | On      |
-| FLUENT_PROTO_RESOURCE | Include the regeneration of a C interface for `resource.proto` file. | On      |
-| FLUENT_PROTO_TRACE    | Include the regeneration of a C interfaces for `trace.proto` and `trace_service.proto` files. | On      |
-| FLUENT_PROTO_LOGS     | Include the regeneration of a C interfaces for `logs.proto` and `logs_service.proto` files. | On      |
-| FLUENT_PROTO_METRICS  | Include the regeneration of a C interfaces for `metrics.proto` and `metrics_service.proto` files. | Off     |
+| FLUENT_PROTO_COMMON   | Include the regeneration of C interfaces for `common.proto` file. | On      |
+| FLUENT_PROTO_RESOURCE | Include the regeneration of C interface for `resource.proto` file. | On      |
+| FLUENT_PROTO_TRACE    | Include the regeneration of C interfaces for `trace.proto` and `trace_service.proto` files. | On      |
+| FLUENT_PROTO_LOGS     | Include the regeneration of C interfaces for `logs.proto` and `logs_service.proto` files. | On      |
+| FLUENT_PROTO_METRICS  | Include the regeneration of C interfaces for `metrics.proto` and `metrics_service.proto` files. | On     |
+| FLUENT_PROTO_PROFILES | Include the regeneartion of C inter for `profiles.proto` | On |
 
 #### 5. Example
 
